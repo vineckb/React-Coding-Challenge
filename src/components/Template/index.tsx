@@ -9,7 +9,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         p="24px"
         alignItems="center"
         justifyContent={"center"}
-        h="100vh"
+        minHeight="100vh"
       >
         <Box
           bg="white"
