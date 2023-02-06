@@ -11,54 +11,52 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/react';
-import { IMessage } from '@/common/types';
-import DangerConfirmation from '@/components/ConfirmationModal';
+} from "@chakra-ui/react";
+import { IMessage } from "@/common/types";
+import DangerConfirmation from "@/components/ConfirmationModal";
+import { useRemoveMessageMutation } from "@/services/api";
 
 interface Props {
-  message: IMessage | undefined;
-  isOpen: boolean;
+  message: IMessage;
   onClose: () => void;
-  remove: (message: IMessage) => Promise<void>;
+  onRemove: () => void;
 }
 
-export default function MessageModal({
-  message,
-  isOpen,
-  onClose,
-  remove,
-}: Props) {
+export default function MessageModal({ message, onClose, onRemove }: Props) {
+  const { mutateAsync } = useRemoveMessageMutation();
+
   const handleRemove = async (): Promise<void> => {
     if (!message) return;
+    await mutateAsync(message._id);
+    onRemove();
 
-    await remove(message);
     onClose();
   };
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent maxW={'500px'}>
+      <ModalContent maxW={"500px"}>
         <ModalHeader>
-          <HStack spacing='16px'>
+          <HStack spacing="16px">
             <Avatar name={message?.user.email} />
             <Text>{message?.user.email}</Text>
           </HStack>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Heading as='h2' fontSize='20px'>
+          <Heading as="h2" fontSize="20px">
             {message?.subject}
           </Heading>
-          <Text mt='24px'>{message?.message}</Text>
+          <Text mt="24px">{message?.message}</Text>
         </ModalBody>
 
-        <ModalFooter mt={'32px'}>
-          <Button variant='ghost' mr={3} onClick={onClose}>
+        <ModalFooter mt={"32px"}>
+          <Button variant="ghost" mr={3} onClick={onClose}>
             Cancel
           </Button>
           <DangerConfirmation
             action={handleRemove}
-            button={<Button colorScheme={'red'}>Remove message</Button>}
+            button={<Button colorScheme={"red"}>Remove message</Button>}
           ></DangerConfirmation>
         </ModalFooter>
       </ModalContent>

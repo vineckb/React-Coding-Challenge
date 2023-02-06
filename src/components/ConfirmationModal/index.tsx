@@ -11,21 +11,17 @@ import {
   Box,
   Text,
   HStack,
-} from '@chakra-ui/react';
-import React, { ReactElement, ReactNode, useState } from 'react';
-import { IoAlertCircleOutline } from 'react-icons/io5';
+} from "@chakra-ui/react";
+import React, { ReactNode, useState } from "react";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 interface Props {
-  button?: ReactElement;
-  action: () => Promise<void> | any;
+  button?: ReactNode;
+  action: () => Promise<void>;
   isDisabled?: boolean;
 }
 
-const DangerConfirmation: React.FC<Props> = function ({
-  button,
-  action,
-  isDisabled,
-}) {
+const DangerConfirmation = function ({ button, action, isDisabled }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
 
@@ -48,39 +44,39 @@ const DangerConfirmation: React.FC<Props> = function ({
                 onOpen();
               }
         }
-        display='inline-block'
+        display="inline-block"
       >
         {button || <Button>Open Modal</Button>}
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent data-testid='danger-confirmation-modal' overflow='hidden'>
-          <ModalHeader fontWeight='400' bg='red.50' color='red.500'>
+        <ModalContent data-testid="danger-confirmation-modal" overflow="hidden">
+          <ModalHeader fontWeight="400" bg="red.50" color="red.500">
             <HStack>
               <Box
-                display='inline-block'
-                p='4px'
-                borderRadius='100%'
-                bg='red.100'
-                color='red.400'
+                display="inline-block"
+                p="4px"
+                borderRadius="100%"
+                bg="red.100"
+                color="red.400"
               >
-                <IoAlertCircleOutline size='24px' />
+                <IoAlertCircleOutline size="24px" />
               </Box>
               <Text>Confirm action</Text>
             </HStack>
           </ModalHeader>
           <ModalCloseButton
-            color='red.500'
-            fontSize='20px'
-            top='15px'
-            right='15px'
+            color="red.500"
+            fontSize="20px"
+            top="15px"
+            right="15px"
             _hover={{
-              bg: 'red.100',
+              bg: "red.100",
             }}
           />
           <ModalBody>
-            <Text my='24px' fontSize='18px' textAlign='center'>
+            <Text my="24px" fontSize="18px" textAlign="center">
               Are you sure you want to do this?
               <br />
               <strong>You can not undo this action.</strong>
@@ -88,10 +84,10 @@ const DangerConfirmation: React.FC<Props> = function ({
           </ModalBody>
 
           <ModalFooter>
-            <Button variant='ghost' mr={3} onClick={onClose}>
+            <Button variant="ghost" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme='red' isLoading={loading} onClick={submit}>
+            <Button colorScheme="red" isLoading={loading} onClick={submit}>
               Confirm
             </Button>
           </ModalFooter>

@@ -1,8 +1,9 @@
-import { startFakeApi } from '@/fakeApi';
-import '@/styles/globals.css';
-import { ChakraProvider } from '@chakra-ui/react';
-import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
+import { ApiProvider } from "@/services/api";
+import { startFakeApi } from "@/services/mock";
+import "@/styles/globals.css";
+import { ChakraProvider } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
+import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -10,8 +11,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ApiProvider>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ApiProvider>
   );
 }
